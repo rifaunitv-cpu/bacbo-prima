@@ -1,8 +1,4 @@
 #!/bin/sh
-# ============================================================
-# entrypoint.sh
-# Script de inicialização do container
-# ============================================================
 
 set -e
 
@@ -10,8 +6,6 @@ echo "============================================="
 echo "  Sistema de Sinais — Iniciando container"
 echo "============================================="
 
-# Aguarda o PostgreSQL estar disponível antes de subir a app
-# Usando Python puro para evitar dependência de ferramentas externas
 echo "Aguardando banco de dados..."
 python -c "
 import time, os
@@ -35,7 +29,7 @@ else:
 echo "Iniciando servidor uvicorn..."
 exec uvicorn app.main:app \
   --host 0.0.0.0 \
-  --port 8000 \
+  --port ${PORT} \
   --workers 1 \
   --log-level info \
   --access-log
